@@ -13,7 +13,7 @@ Sentry.init({
     new Tracing.Integrations.Express({ app }),
     new Tracing.Integrations.Mongo()
   ],
-
+  release: process.env.EXPRESS_API_RELEASE || "0.0.1",
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
