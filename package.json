@@ -1,0 +1,26 @@
+{
+  "name": "rewards",
+  "version": "1.0.0",
+  "description": "Example project using Node.js/Express/MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpropst/rewards.git"
+  },
+  "author": "richard.propst@sentry.io",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpropst/rewards/issues"
+  },
+  "homepage": "https://github.com/rpropst/rewards#readme",
+  "dependencies": {
+    "@sentry/node": "^6.2.5",
+    "@sentry/tracing": "^6.2.5",
+    "express": "^4.17.1",
+    "http": "^0.0.1-security",
+    "mongoose": "^5.12.3"
+  }
+}
