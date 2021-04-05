@@ -1,2 +1,2 @@
-# rewards
-Example project using Node.js/Express/MongoDB
+# rewardsAccount
+Demo project of Node/Express/MongoDB with Sentry
