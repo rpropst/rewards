@@ -6,6 +6,10 @@ const http = require("http");
 const app = express();
 const port = 3333;
 
+
+require('dotenv').config();
+
+
 Sentry.init({
   dsn: "https://ce3f836aa9064fbcbc2f8dbe78d34a56@o87286.ingest.sentry.io/5518875",
   integrations: [
@@ -14,6 +18,7 @@ Sentry.init({
     new Tracing.Integrations.Mongo()
   ],
   release: process.env.EXPRESS_API_RELEASE || "0.0.1",
+  environment: process.env.API_ENVIRONMENT || "production",
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
@@ -59,4 +64,8 @@ app.get("/", (req, res) => {
 
 require('./app/routes/account.routes')(app);
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.listen(port, () => { 
+  console.log(`Hello world app listening on port ${port}!`);
+  console.log(`Release: ${process.env.EXPRESS_API_RELEASE}`);
+  console.log(`Environment: ${process.env.API_ENVIRONMENT}`);
+});

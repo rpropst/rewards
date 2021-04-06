@@ -97,6 +97,13 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
+  if(req.body.points < 0) {
+    Sentry.captureException("Invalid value for points. Must be greater than 0");
+    res.status(500).send({
+      message: "Points must be positive integer"
+    });
+  }
+
   Account.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
