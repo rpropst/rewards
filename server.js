@@ -32,7 +32,11 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 // The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
+app.use(Sentry.Handlers.errorHandler({
+  shouldHandleError(error) {
+    return true;
+  }
+}));
 
 app.use(function onError(err, req, res, next) {
   console.log('called onError()');
