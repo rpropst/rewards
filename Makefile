@@ -1,6 +1,6 @@
 SENTRY_ORG=testorg-az
 SENTRY_PROJECT=r2r-express
-RELEASE=2021.4.5
+RELEASE=2021.4.6
 
 
 setup_release: create_release associate_commits
