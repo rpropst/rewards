@@ -65,17 +65,31 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
+  // Get a constant 
+  const factor = Math.floor(Math.random() * 1000);
+  
+  let delayFactor = factor > 7000 ? 0 : factor;
+
   Account.findById(id)
     .then(data => {
+      if(factor > 900) {
+        throw 'destination system unavailable'
+      }
       if (!data)
-        res.status(404).send({ message: `Account not found with id ${id}`});
-      else res.send(data);
+        setTimeout(() => { res.status(404).send({ message: `Account not found with id ${id}`}); }, delayFactor);
+        //res.status(404).send({ message: `Account not found with id ${id}`});
+      else setTimeout(() => {res.send(data); }, delayFactor);
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || `Some error occurred while retrieving account with id ${id}`
-      });
+      if(factor > 900) {
+        Sentry.captureException(err);
+        res.status(503).send('destination unavailable');
+      } else {
+        res.status(500).send({
+          message:
+            err.message || `Some error occurred while retrieving account with id ${id}`
+        });
+      }
     })
 };
 

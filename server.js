@@ -9,6 +9,17 @@ const port = 3333;
 
 require('dotenv').config();
 
+// Status codes to create
+
+// 429 - too many requests
+// 502 - bad gateway
+// 503 - service unavailable
+// 555 - custom error
+// 401 - unauthorized
+// 403 - Forbidden
+// 404 - Not Found
+// 409 - Conflict
+
 
 Sentry.init({
   dsn: "https://ce3f836aa9064fbcbc2f8dbe78d34a56@o87286.ingest.sentry.io/5518875",
