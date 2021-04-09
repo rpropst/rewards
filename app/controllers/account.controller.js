@@ -124,8 +124,6 @@ exports.update = (req, res) => {
     }); }, delayFactor);
   }
 
-  setTimeout(() => {res.send(data); }, delayFactor);
-
   Account.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
