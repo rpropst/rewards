@@ -148,19 +148,23 @@ exports.delete = (req, res) => {
   Account.findByIdAndRemove(id)
     .then(data => {
       if (!data) {
-        res.status(404).send({
-          message: `Cannot delete Account with id=${id}. Maybe Account was not found!`
-        });
+        sendResponse(res, 404, `Cannot delete Account with id=${id}. Maybe Account was not found!`);
+        // res.status(404).send({
+        //   message: `Cannot delete Account with id=${id}. Maybe Account was not found!`
+        // });
       } else {
-        res.send({
-          message: "Account was deleted successfully!"
-        });
+        sendResponse(res, 200, `Account was deleted successfully!`);
+        // res.send({
+        //   message: "Account was deleted successfully!"
+        // });
       }
     })
     .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Account with id=" + id
-      });
+      Sentry.captureException('Error deleting account');
+      sendResponse(res, 500, `Could not delete Account with id: ${id}`);
+      // res.status(500).send({
+      //   message: "Could not delete Account with id=" + id
+      // });
     });
 };
 
@@ -193,3 +197,15 @@ exports.findPremium = (req, res) => {
       });
     });
 };
+
+function sendResponse(res, status, message) {
+  const factor = Math.floor(Math.random() * 1000);
+  
+  let delayFactor = factor > 7000 ? 0 : factor;
+
+  setTimeout(() => {
+    res.status(status).send({
+      message: message
+    }); 
+  }, delayFactor);
+}
