@@ -103,6 +103,12 @@ exports.update = (req, res) => {
     level: Sentry.Severity.Info
   });
 
+
+  // Get a constant 
+  const factor = Math.floor(Math.random() * 1000);
+  
+  let delayFactor = factor > 7000 ? 0 : factor;
+
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -113,10 +119,12 @@ exports.update = (req, res) => {
 
   if(req.body.points < 0) {
     Sentry.captureException("Invalid value for points. Must be greater than 0");
-    res.status(500).send({
+    setTimeout(() => {res.status(500).send({
       message: "Points must be positive integer"
-    });
+    }); }, delayFactor);
   }
+
+  setTimeout(() => {res.send(data); }, delayFactor);
 
   Account.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
@@ -124,7 +132,7 @@ exports.update = (req, res) => {
         res.status(404).send({
           message: `Cannot update Account with id=${id}. Maybe Account was not found!`
         });
-      } else res.send({ message: "Account was updated successfully." });
+      } else setTimeout(() => {res.send({ message: "Account was updated successfully." });}, delayFactor);
     })
     .catch(err => {
       res.status(500).send({
